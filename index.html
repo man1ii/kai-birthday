@@ -31,20 +31,103 @@
     <p class="subtitle">100 reasons why i love you :3</p>
     <section class="cards" aria-label="Five chapters of reasons">
       <button class="card one" data-title="20 things i love about you :3"><div class="photo"><span>your picture here ♡</span></div><h2>20 things i love about you :3</h2></button>
-      <button class="card two" data-title="20 things that remind me of you :3"><div class="photo"><span>your picture here ♡</span></div><h2>20 little things you do that i love :3</h2></button>
-      <button class="card three" data-title="20 memories of us that i love :3"><div class="photo"><span>your picture here ♡</span></div><h2>20 memories i love :3</h2></button>
+      <button class="card two" data-title="20 things that remind me of you :3"><div class="photo"><span>your picture here ♡</span></div><h2>20 things that remind me of you :3</h2></button>
+      <button class="card three" data-title="20 memories of us that i love :3"><div class="photo"><span>your picture here ♡</span></div><h2>20 memories of us that i love :3</h2></button>
       <button class="card four" data-title="20 ways you make me feel :3"><div class="photo"><span>your picture here ♡</span></div><h2>20 ways you make me feel :3</h2></button>
-      <button class="card five" data-title="20 things i wanna do with you :3"><div class="photo"><span>your picture here ♡</span></div><h2>20 reasons i’m excited for our future :3</h2></button>
+      <button class="card five" data-title="20 things i wanna do with you :3"><div class="photo"><span>your picture here ♡</span></div><h2>20 things i wanna do with you :3</h2></button>
     </section>
   </main>
   <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="chapterTitle">
     <article class="book"><button class="close" aria-label="Close">×</button><h2 id="chapterTitle"></h2><div class="reasons" id="reasons"></div></article>
   </div>
   <script>
-    const modal=document.querySelector('#modal'),title=document.querySelector('#chapterTitle'),list=document.querySelector('#reasons');
-    document.querySelectorAll('.card').forEach(card=>card.addEventListener('click',()=>{title.textContent=card.dataset.title;list.innerHTML=Array.from({length:20},()=>`<div class="reason">your reason goes here...</div>`).join('');modal.classList.add('open');document.body.style.overflow='hidden'}));
-    function close(){modal.classList.remove('open');document.body.style.overflow=''}
-    document.querySelector('.close').addEventListener('click',close);modal.addEventListener('click',e=>{if(e.target===modal)close()});document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
-  </script>
+  const reasonLists = [
+    // FIRST PICTURE: 20 things i love about you
+    [
+      "I love your smile.",
+      "I love your voice.",
+      "I love how you make me laugh.",
+      "Type your fourth reason here.",
+      "Type your fifth reason here."
+    ],
+
+    // SECOND PICTURE: 20 things that remind me of you
+    [
+      "This song always reminds me of you.",
+      "Whenever I see ___, I think about you.",
+      "The color ___ reminds me of you.",
+      "Type another thing here.",
+      "Type another thing here."
+    ],
+
+    // THIRD PICTURE: 20 memories of us that i love
+    [
+      "One of my favorite memories is when...",
+      "I’ll never forget the time we...",
+      "I still laugh when I remember...",
+      "Type another memory here.",
+      "Type another memory here."
+    ],
+
+    // FOURTH PICTURE: 20 ways you make me feel
+    [
+      "You make me feel loved.",
+      "You make me feel understood.",
+      "You make me feel less alone.",
+      "Type another feeling here.",
+      "Type another feeling here."
+    ],
+
+    // FIFTH PICTURE: 20 things i wanna do with you
+    [
+      "I want to celebrate more birthdays with you.",
+      "I want to watch our favorite movies together.",
+      "I want to travel somewhere new with you.",
+      "Type another thing here.",
+      "Type another thing here."
+    ]
+  ];
+
+  const modal = document.querySelector("#modal");
+  const title = document.querySelector("#chapterTitle");
+  const list = document.querySelector("#reasons");
+  const cards = document.querySelectorAll(".card");
+
+  cards.forEach((card, categoryNumber) => {
+    card.addEventListener("click", () => {
+      title.textContent = card.dataset.title;
+      list.replaceChildren();
+
+      reasonLists[categoryNumber].forEach(reason => {
+        const reasonBox = document.createElement("div");
+        reasonBox.className = "reason";
+        reasonBox.textContent = reason;
+        list.appendChild(reasonBox);
+      });
+
+      modal.classList.add("open");
+      document.body.style.overflow = "hidden";
+    });
+  });
+
+  function closeSection() {
+    modal.classList.remove("open");
+    document.body.style.overflow = "";
+  }
+
+  document.querySelector(".close").addEventListener("click", closeSection);
+
+  modal.addEventListener("click", event => {
+    if (event.target === modal) {
+      closeSection();
+    }
+  });
+
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape") {
+      closeSection();
+    }
+  });
+</script>
 </body>
 </html>
